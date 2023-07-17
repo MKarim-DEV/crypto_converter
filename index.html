@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="/js/script.js" defer></script>
+    <title>Crypto-converter in JS</title>
+  </head>
+  <body>
+    <h1 class="text-center mb-3 text-decoration-underline text-warning">Convertisseur de crypto-monnaies</h1>
+    <div class="row">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-4" style="width: 280px;">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4 fw-bolder text-info">CryptoConv.com</span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#" id="home_btn" class="nav-link active" onclick="back_home()" aria-current="page">
+            <img src="img/icons/house-fill.svg" class="me-2 pb-1" width="26" height="26"><use xlink:href="#home"></use>
+           Accueil
+          </a>
+        </li>
+        <li>
+          <a href="#" id="crypto_btn" class="nav-link" onclick="switch_converter2()">
+            <img src="img/icons/currency-bitcoin.svg" class="me-2 pb-1" width="26" height="26"><use xlink:href="#speedometer2"></use>
+            Convert to Cryptos
+          </a>
+        </li>
+        <li>
+          <a href="#" id="currency_btn" class="nav-link" onclick="switch_converter1()">
+            <img src="img/icons/currency-euro.svg" class="me-2 pb-1" width="26" height="26"><use xlink:href="#table"></use>
+            Convert to Currencies
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="container col-8">
+      <form acion="" id="form0" class="d-flex flex-column align-items-center justify-content-center mt-5 pt-5">
+        <p class="text-center fw-bold ">Quel type de conversion désirez-vous effectuer?</p>
+        <div class="mb-4">
+          <input type="radio" id="toCrypto"
+           name="mode" value="mode1">
+          <label for="contactChoice1">Devise vers Crypto</label></br>
+          <input type="radio" id="fromCrypto"
+           name="mode" value="mode2">
+          <label for="contactChoice2">Crypto vers Devise</label>
+        </div>
+        <div>
+          <button type="submit" onclick="converter_choice(event)" id="modeChoice" class="btn btn-success px-5 py-2 rounded-pill">Valider</button>
+        </div>
+      </form>
+      <form action="" id="form1" class="d-none mt-5">
+        <input
+          type="text"
+          name="amount"
+          id="amount"
+          placeholder="Entrez un montant"
+          required
+        />
+        <label id="fromCurrencyName"></label>
+        <div id="select-field">
+          <select
+            name="fromCurrency"
+            id="fromCurrency"
+            onchange="showFromCurrencyName()"
+          >
+            <option value="USD" selected="">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="INR">INR - India Rupee</option>
+            <option value="NZD">NZD - New Zealand Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="ZAR">ZAR - South African Rand</option>
+            <option value="BGN">BGN - Bulgarian Lev</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="SEK">SEK - Swedish Krona</option>
+            <option value="THB">THB - Thai Baht</option>
+            <option value="HUF">HUF - Hungarian Forint</option>
+            <option value="CNY">CNY - Chinese Yuan Renminbi</option>
+            <option value="NOK">NOK - Norwegian Krone</option>
+            <option value="MXN">MXN - Mexican Peso</option>
+            <option value="GHS">GHS - Ghanians Cedi</option>
+            <option value="NGN">NGN - Nigerian Naira</option>
+          </select>
+          <select
+            name="toCurrency"
+            id="toCurrency"
+            onchange="showCurrencyName()"
+          >
+            <option value="BTC">Bitcoin (BTC)</option>
+            <option value="ETH">Ethereum (ETH)</option>
+            <option value="USDT">Tether (USDT)</option>
+            <option value="BNB">Binance Coin (BNB)</option>
+            <option value="USDC">USD Coin (USDC)</option>
+            <option value="XRP">XRP (XRP)</option>
+            <option value="BUSD">Binance USD (BUSD)</option>
+            <option value="ADA">cardano (ADA)</option>
+            <option value="DOGE">Dogecoin (DOGE)</option>
+            <option value="MATIC">Polygon (MATIC)</option>
+            <option value="SOL">Solana (SOL)</option>
+            <option value="DOT">Polkadot (DOT)</option>
+            <option value="SHIB">Shiba Inu (SHIB)</option>
+            <option value="LTC">Litecoin (LTC)</option>
+            <option value="TRX">Tron (TRX)</option>
+            <option value="AVAX">Avalanche (AVAX)</option>
+          </select>
+        </div>
+        <br />
+        <button type="button" id="convert" class="primary-btn">Convertir</button>
+        <p id="result"></p>
+        <div class="d-flex justify-content-around">
+        <div class="btn btn-outline-info" id="currency_mode" onclick="switch_converter1()">Inverser la conversion</div>
+        <div class="btn btn-outline-secondary" id="displayGraph">Afficher le Graphique</div> 
+        <div class="btn btn-outline-secondary" onclick="back_home()">Retourner à l'accueil</div> 
+      </div>
+      <div id="display_graph" class="mt-4"></div>
+       </form>
+      <form action="" id="form2" class="d-none mt-5">
+        <input
+          type="text"
+          name="amount2"
+          id="amount2"
+          placeholder="Entrez un montant"
+          required
+        />
+        <label id="fromCurrencyName"></label>
+        <div id="select-field">
+            <select
+            name="fromCurrency2"
+            id="fromCurrency2"
+            onchange="showCurrencyName()"
+          >
+            <option value="BTC">Bitcoin (BTC)</option>
+            <option value="ETH">Ethereum (ETH)</option>
+            <option value="USDT">Tether (USDT)</option>
+            <option value="BNB">Binance Coin (BNB)</option>
+            <option value="USDC">USD Coin (USDC)</option>
+            <option value="XRP">XRP (XRP)</option>
+            <option value="BUSD">Binance USD (BUSD)</option>
+            <option value="ADA">cardano (ADA)</option>
+            <option value="DOGE">Dogecoin (DOGE)</option>
+            <option value="MATIC">Polygon (MATIC)</option>
+            <option value="SOL">Solana (SOL)</option>
+            <option value="DOT">Polkadot (DOT)</option>
+            <option value="SHIB">Shiba Inu (SHIB)</option>
+            <option value="LTC">Litecoin (LTC)</option>
+            <option value="TRX">Tron (TRX)</option>
+            <option value="AVAX">Avalanche (AVAX)</option>
+          </select>
+          <select
+            name="toCurrency2"
+            id="toCurrency2"
+            onchange="showFromCurrencyName()"
+          >
+            <option value="USD" selected="">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="INR">INR - India Rupee</option>
+            <option value="NZD">NZD - New Zealand Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="ZAR">ZAR - South African Rand</option>
+            <option value="BGN">BGN - Bulgarian Lev</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="SEK">SEK - Swedish Krona</option>
+            <option value="THB">THB - Thai Baht</option>
+            <option value="HUF">HUF - Hungarian Forint</option>
+            <option value="CNY">CNY - Chinese Yuan Renminbi</option>
+            <option value="NOK">NOK - Norwegian Krone</option>
+            <option value="MXN">MXN - Mexican Peso</option>
+            <option value="GHS">GHS - Ghanians Cedi</option>
+            <option value="NGN">NGN - Nigerian Naira</option>
+          </select>
+        </div>
+        <br />
+        <button type="button" id="convert2" class="primary-btn">Convert</button>
+        <p id="result2"></p>
+        <div class="d-flex justify-content-around">
+        <div class="btn btn-outline-info" onclick="switch_converter2()">Inverser la conversion</div>
+        <div class="btn btn-outline-secondary" id="displayGraph2">Afficher le Graphique</div>
+        <div class="btn btn-outline-secondary" onclick="back_home()">Retourner à l'accueil</div> 
+      </div> 
+      <div id="display_graph2"></div>
+      </form>
+    </div>
+  </body>
+</html>
